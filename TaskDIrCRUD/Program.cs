@@ -10,6 +10,10 @@ namespace TaskDIrCRUD
     {
         static void Main(string[] args)
         {
+
+            // Make Parallel Directory + populate
+            // Make XML TREE-
+            // proces parallel files
         }
     }
 }
