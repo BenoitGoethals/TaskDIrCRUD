@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,54 +10,86 @@ namespace TaskDIrCRUD
     {
         static void Main(string[] args)
         {
+            //  Creator creator = new Creator();
 
-            // Make Parallel Directory + populate
+            // Console.WriteLine(creator.Fractional(10));
+            // creator.Fractional(500);         
+
+            //   creator.CreateFolders("c:/temp/test/",1,5,10);
+            // Make Parallel Directory + populate h:200 v 200
+
+
+
             // Make XML TREE-
-            // proces parallel files
-        }
-        /*
-        private static void createAlphabetFolders(File parent, int start, int end, int deepth)
-        {
 
-            if (deepth <= 0)
-            {
+
+
+
+            // proces parallel files
+
+
+
+            FindPath(0, 0, 'S');
+
+            Console.ReadLine();
+        }
+
+
+        static char[,] lab =
+          { { ' ', ' ', ' ', '*', ' ', ' ', ' ' },
+        { '*', '*', ' ', '*', ' ', '*', ' ' },
+        { ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+        { ' ', '*', '*', '*', '*', '*', ' ' },
+        { ' ', ' ', ' ', ' ', ' ', ' ', 'e' }, };
+
+        static char[] path = new char[lab.GetLength(0) * lab.GetLength(1)];
+        static int position = 0;
+
+        static void FindPath(int row, int col, char direction)
+        {
+            if ((col < 0) || (row < 0) || (col >= lab.GetLength(1)) || (row >= lab.GetLength(0)))
+            { // We are out of the labyrinth 
+                FindPath(0, 0, 'S');
                 return;
             }
 
-            for (int i = start; i < end; i++)
+
+            // Append the direction to the path 
+            path[position] = direction;
+            position++;
+            // Check if we have found the exit 
+            if (lab[row, col] == 'e')
+            { PrintPath(path, 1, position - 1); }
+            if (lab[row, col] == ' ')
             {
-
-                // create the folder
-                String folderName = "" + ((char)i);
-                File folder = new File(parent, folderName);
-                System.out.println("creating: " + folder.getPath());
-                folder.mkdirs();
-
-                // call recursively
-                createAlphabetFolders(folder, start, end, deepth - 1);
+                // The current cell is free. Mark it as visited 
+                lab[row, col] = 's';
+                // Invoke recursion to explore all possible directions 
+                FindPath(row, col - 1, 'L');
+                // left 
+                FindPath(row - 1, col, 'U');
+                // up 
+                FindPath(row, col + 1, 'R');
+                // right 
+                FindPath(row + 1, col, 'D');
+                // down 
+                // Mark back the current cell as free 
+                lab[row, col] = ' ';
             }
+            // Remove the last direction from the path
+            position--;
         }
-        */
+        static void PrintPath(char[] path, int startPos, int endPos)
+        {
+            Console.Write("Found path to the exit: ");
+            for (int pos = startPos; pos <= endPos; pos++)
+            { Console.Write(path[pos]); }
+            Console.WriteLine();
+        }
 
-/*
- ublic static void main(String[] args) {
-File root = new File("C:\\SO");
-List<String> alphabet = new ArrayList<String>();
-for (int i = 0; i < 26; i++) {
-alphabet.add(String.valueOf((char)('a' + i)));
-}
 
-final int depth = 3;
-mkDirs(root, alphabet, depth);
-}
 
-public static void mkDirs(File root, List<String> dirs, int depth) {
-if (depth == 0) return;
-for (String s : dirs) {
-File subdir = new File(root, s);
-subdir.mkdir();
-mkDirs(subdir, dirs, depth - 1);
-}
-}*/
-}
+
+
+    }
 }
